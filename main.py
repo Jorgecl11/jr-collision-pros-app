@@ -2,10 +2,11 @@ def main():
     show_welcome()
     customer_name = get_customer_name()
     vehicle_vin, license_plate = get_vehicle_information()
+
     customer = {
-    "name": customer_name,
-    "vin": vehicle_vin,
-    "license_plate": license_plate,
+        "name": customer_name,
+        "vin": vehicle_vin,
+        "license_plate": license_plate,
 
 }
     display_summary(customer)
@@ -43,14 +44,10 @@ def get_vehicle_information():
 def display_summary(customer):
     print("=" * 25)
     print("Customer Summary")
+
+    for key, value in customer.items():
+        print(key.replace("_", " ").title() +':', value)
     print("=" * 25)
-    print(f"Customer: {customer['name']}\n")
-
-    print(f"VIN: {customer['vin']}")
-    print(f"License Plate: {customer['license_plate']}\n")
-
-    print("\nThank you for choosing\nJR Collision Pros!")
-
 
 
 if __name__ == "__main__":
