@@ -9,6 +9,18 @@ def main():
         "license_plate": license_plate,
 
 }
+    
+    repair_statuses = [
+    "Estimate",
+    "Estimate",
+    "In Progress",
+    "Completed",
+    "Estimate",
+    "Waiting for Parts",
+    "Completed",
+    "In Progress"
+]
+    display_repair_order_counts(repair_statuses)
     display_summary(customer)
 
 def show_welcome():
@@ -36,12 +48,28 @@ def get_vehicle_information():
     # VINs and license plates are stored as strings because they identify a vehicle.
     # We compare and display them rather than perform mathematical calculations.
     print(f"License Plate: {license_plate}")
-    print(f"Plate Length: {len(license_plate)}")
+    print(f"Plate Length: {len(license_plate)}\n")
 
     # return variables data
     return vehicle_vin, license_plate
 
+def display_repair_order_counts(repair_statuses):
+    repair_counts = {}
+    print("=" * 25)
+    print("Repair Statuses")
+    print("=" * 25)
+    for repair in repair_statuses:
+        if repair in repair_counts:
+            
+            repair_counts[repair] += 1
+        else:
+            repair_counts[repair] = 1
+    for key, value in repair_counts.items():
+        print(f"{key}: {value}")
+
+
 def display_summary(customer):
+    print()
     print("=" * 25)
     print("Customer Summary")
 
