@@ -1,10 +1,11 @@
 def main():
     show_welcome()
-    customer_name = get_customer_name()
+    customer_name, customer_phone_number = get_customer_information()
     vehicle_vin, license_plate = get_vehicle_information()
 
     customer = {
         "name": customer_name,
+        "phone": customer_phone_number,
         "vin": vehicle_vin,
         "license_plate": license_plate,
 
@@ -30,10 +31,11 @@ def show_welcome():
     print("Customer Intake System")
     print("=" * 25)
 
-def get_customer_name():
+def get_customer_information():
     customer_name = input("Enter customer name: ").title()
+    customer_phone_number = input("Enter phone number: ")
     print(f"Welcome, {customer_name}")
-    return customer_name
+    return customer_name, customer_phone_number
 
 def get_vehicle_information():
     print("\nVehicle Information")
@@ -61,10 +63,12 @@ def display_repair_order_counts(repair_statuses):
 
 def save_customer(customer):
     with open("customers.txt", "a") as file:
+        file.write("=" * 25 + "\n")
         file.write(f"Name: {customer['name']}\n")
+        file.write(f"Phone: {customer['phone']}\n")
         file.write(f"VIN: {customer['vin']}\n")
         file.write(f"License Plate: {customer['license_plate']}\n")
-        file.write("\n")
+        file.write("=" * 25 + "\n\n")
 
 def display_summary(customer):
     print()
