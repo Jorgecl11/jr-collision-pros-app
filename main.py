@@ -21,6 +21,7 @@ def main():
     "In Progress"
 ]
     display_repair_order_counts(repair_statuses)
+    save_customer(customer)
     display_summary(customer)
 
 def show_welcome():
@@ -40,13 +41,7 @@ def get_vehicle_information():
     vehicle_vin = input("Enter vin number: ").upper()
     license_plate = input("Enter license plate: ").upper()
     print(f"VIN: {vehicle_vin}")
-    print(f"VIN Length: {len(vehicle_vin)}")
-    print(f"First Character: {vehicle_vin[0]}\n")
-    # VINs and license plates are stored as strings because they identify a vehicle.
-    # We compare and display them rather than perform mathematical calculations.
     print(f"License Plate: {license_plate}")
-    print(f"Plate Length: {len(license_plate)}\n")
-
     # return variables data
     return vehicle_vin, license_plate
 
@@ -64,6 +59,12 @@ def display_repair_order_counts(repair_statuses):
     for key, value in repair_counts.items():
         print(f"{key}: {value}")
 
+def save_customer(customer):
+    with open("customers.txt", "a") as file:
+        file.write(f"Name: {customer['name']}\n")
+        file.write(f"VIN: {customer['vin']}\n")
+        file.write(f"License Plate: {customer['license_plate']}\n")
+        file.write("\n")
 
 def display_summary(customer):
     print()
