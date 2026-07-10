@@ -32,9 +32,6 @@ def show_welcome():
 def get_customer_name():
     customer_name = input("Enter customer name: ").title()
     print(f"Welcome, {customer_name}")
-    print(f"Name Length: {len(customer_name)}")
-    print(f"First Letter: {customer_name[0]}")
-    print(f"Last Letter: {customer_name[-1]}")
     return customer_name
 
 def get_vehicle_information():
