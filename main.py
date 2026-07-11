@@ -8,7 +8,6 @@ def main():
         "phone": customer_phone_number,
         "vin": vehicle_vin,
         "license_plate": license_plate,
-
 }
     
     repair_statuses = [
@@ -44,7 +43,6 @@ def get_vehicle_information():
     license_plate = input("Enter license plate: ").upper()
     print(f"VIN: {vehicle_vin}")
     print(f"License Plate: {license_plate}")
-    # return variables data
     return vehicle_vin, license_plate
 
 def display_repair_order_counts(repair_statuses):
