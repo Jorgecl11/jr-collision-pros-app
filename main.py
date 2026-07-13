@@ -8,7 +8,7 @@ def main():
         "phone": customer_phone_number,
         "vin": vehicle_vin,
         "license_plate": license_plate,
-}
+    }
     
     repair_statuses = [
     "Estimate",
@@ -19,10 +19,11 @@ def main():
     "Waiting for Parts",
     "Completed",
     "In Progress"
-]
+    ]
     display_repair_order_counts(repair_statuses)
     save_customer(customer)
     display_summary(customer)
+    display_saved_customers()
 
 def show_welcome():
     print("=" * 25)
@@ -76,6 +77,18 @@ def display_summary(customer):
     for key, value in customer.items():
         print(key.replace("_", " ").title() +':', value)
     print("=" * 25)
+
+
+def display_saved_customers():
+    print()
+    print("=" * 25)
+    print("Saved Customers")
+    print("=" * 25)
+
+    with open("customers.txt", "r") as file:
+        contents = file.read()
+
+    print(contents)
 
 
 if __name__ == "__main__":
