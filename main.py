@@ -86,9 +86,8 @@ def display_saved_customers():
     print("=" * 25)
 
     with open("customers.txt", "r") as file:
-        contents = file.read()
-
-    print(contents)
+        for line in file:
+            print(line, end="")
 
 
 if __name__ == "__main__":
