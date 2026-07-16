@@ -1,35 +1,64 @@
 def main():
     show_welcome()
-    customer_name, customer_phone_number = get_customer_information()
-    vehicle_vin, license_plate = get_vehicle_information()
 
-    customer = {
-        "name": customer_name,
-        "phone": customer_phone_number,
-        "vin": vehicle_vin,
-        "license_plate": license_plate,
-    }
+    selected_choice = menu_option()
+    if selected_choice == 1:
+        customer_name, customer_phone_number = get_customer_information()
+        vehicle_vin, license_plate = get_vehicle_information()
+        
+
+        customer = {
+            "name": customer_name,
+            "phone": customer_phone_number,
+            "vin": vehicle_vin,
+            "license_plate": license_plate,
+        }
+        save_customer(customer)
+
+    elif selected_choice == 2:
+        display_saved_customers()
+
+    elif selected_choice == 3:
+        display_last_customer()
+
+    elif selected_choice == 4:
+        print("Goodbye!")
+
+
+     
     
-    repair_statuses = [
-    "Estimate",
-    "Estimate",
-    "In Progress",
-    "Completed",
-    "Estimate",
-    "Waiting for Parts",
-    "Completed",
-    "In Progress"
-    ]
-    display_repair_order_counts(repair_statuses)
-    save_customer(customer)
-    display_summary(customer)
-    display_saved_customers()
+    # repair_statuses = [
+    # "Estimate",
+    # "Estimate",
+    # "In Progress",
+    # "Completed",
+    # "Estimate",
+    # "Waiting for Parts",
+    # "Completed",
+    # "In Progress"
+    # ]
+    # display_repair_order_counts(repair_statuses)
+    
+    # find_customer_by_name()
+
+    
+    
 
 def show_welcome():
     print("=" * 25)
     print("JR Collision Pros")
     print("Customer Intake System")
     print("=" * 25)
+
+def menu_option():
+    print("1. Add Customer")
+    print("2. View All Customers")
+    print("3. View Last Customer")
+    print("4. Exit")
+
+    selected_choice = int(input("Choose an option: "))
+    return selected_choice
+
 
 def get_customer_information():
     customer_name = input("Enter customer name: ").title()
@@ -89,6 +118,27 @@ def display_saved_customers():
         for line in file:
             print(line, end="")
 
+def find_customer_by_name():
+    customer_name = input("Enter customer name to search: ").title()
+    found_customer = False
+
+    with open("customers.txt", "r") as file:
+        for line in file:
+            if customer_name in line:
+                found_customer = True
+
+            if found_customer == True and line.strip() != "=" *25:
+                print(line)
+            else:
+                found_customer = False
+
+def display_last_customer():
+
+    with open("customers.txt", "r") as file:
+        customers = file.readlines()
+        last_customer = customers[-7:]
+        for customer in last_customer:
+            print(customer, end="")
 
 if __name__ == "__main__":
     main()
