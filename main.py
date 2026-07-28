@@ -1,3 +1,23 @@
+class Customer:
+
+    def __init__(self, name, phone_number, vin, license_plate):
+        self.name = name
+        self.phone_number = phone_number
+        self.vin = vin
+        self.license_plate = license_plate
+
+    def display_summary(self):
+        print()
+        print("=" * 25)
+        print("Customer Summary")
+        print(f"Name: {self.name.title()}")
+        print(f"Phone number: {self.phone_number}")
+        print(f"VIN: {self.vin.upper()}")
+        print(f"License Plate: {self.license_plate.upper()}")
+
+
+
+
 def main():
     show_welcome()
 
@@ -7,13 +27,14 @@ def main():
         vehicle_vin, license_plate = get_vehicle_information()
         
 
-        customer = {
-            "name": customer_name,
-            "phone": customer_phone_number,
-            "vin": vehicle_vin,
-            "license_plate": license_plate,
-        }
+        customer = Customer(
+            customer_name,
+            customer_phone_number,
+            vehicle_vin,
+            license_plate)
+        
         save_customer(customer)
+        customer.display_summary()
 
     elif selected_choice == 2:
         display_saved_customers()
@@ -23,26 +44,6 @@ def main():
 
     elif selected_choice == 4:
         print("Goodbye!")
-
-
-     
-    
-    # repair_statuses = [
-    # "Estimate",
-    # "Estimate",
-    # "In Progress",
-    # "Completed",
-    # "Estimate",
-    # "Waiting for Parts",
-    # "Completed",
-    # "In Progress"
-    # ]
-    # display_repair_order_counts(repair_statuses)
-    
-    # find_customer_by_name()
-
-    
-    
 
 def show_welcome():
     print("=" * 25)
@@ -92,20 +93,12 @@ def display_repair_order_counts(repair_statuses):
 def save_customer(customer):
     with open("customers.txt", "a") as file:
         file.write("=" * 25 + "\n")
-        file.write(f"Name: {customer['name']}\n")
-        file.write(f"Phone: {customer['phone']}\n")
-        file.write(f"VIN: {customer['vin']}\n")
-        file.write(f"License Plate: {customer['license_plate']}\n")
+        file.write(f"Name: {customer.name}\n")
+        file.write(f"Phone: {customer.phone_number}\n")
+        file.write(f"VIN: {customer.vin}\n")
+        file.write(f"License Plate: {customer.license_plate}\n")
         file.write("=" * 25 + "\n\n")
 
-def display_summary(customer):
-    print()
-    print("=" * 25)
-    print("Customer Summary")
-
-    for key, value in customer.items():
-        print(key.replace("_", " ").title() +':', value)
-    print("=" * 25)
 
 
 def display_saved_customers():
