@@ -1,0 +1,14 @@
+def show_welcome():
+    print("=" * 25)
+    print("JR Collision Pros")
+    print("Customer Intake System")
+    print("=" * 25)
+
+def menu_option():
+    print("1. Add Customer")
+    print("2. View All Customers")
+    print("3. View Last Customer")
+    print("4. Exit")
+
+    selected_choice = int(input("Choose an option: "))
+    return selected_choice
