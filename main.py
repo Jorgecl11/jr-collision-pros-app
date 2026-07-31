@@ -52,20 +52,6 @@ def get_vehicle_information():
     print(f"License Plate: {license_plate}")
     return vehicle_vin, license_plate
 
-def display_repair_order_counts(repair_statuses):
-    repair_counts = {}
-    print("=" * 25)
-    print("Repair Statuses")
-    print("=" * 25)
-    for repair in repair_statuses:
-        if repair in repair_counts:
-            
-            repair_counts[repair] += 1
-        else:
-            repair_counts[repair] = 1
-    for key, value in repair_counts.items():
-        print(f"{key}: {value}")
-
 
 
 if __name__ == "__main__":
