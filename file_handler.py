@@ -21,17 +21,44 @@ def display_saved_customers():
 
 def find_customer_by_name():
     customer_name = input("Enter customer name to search: ").title()
+    current_record = ""
     found_customer = False
 
     with open("customers.txt", "r") as file:
         for line in file:
-            if customer_name in line:
-                found_customer = True
-
-            if found_customer == True and line.strip() != "=" *25:
-                print(line)
+            if line.strip() != "=" * 25:
+                current_record += line
             else:
-                found_customer = False
+                if customer_name in current_record:
+                    print(current_record)
+                    found_customer = True
+
+                current_record = ""
+
+        if not found_customer:
+            print("Customer not found.")
+            
+
+def find_customer_by_license_plate():
+    license_plate = input("Enter license plate to search: ").upper()
+    current_record = ""
+    found_license_plate = False
+
+    with open("customers.txt", "r") as file:
+        for line in file:
+            if line.strip() != "=" *25:
+                current_record += line
+            else:
+                if license_plate in current_record:
+                    print(current_record)
+                    found_license_plate = True
+
+                current_record = ""
+
+        if not found_license_plate:
+            print("Customer not found.")
+
+
 
 def display_last_customer():
 

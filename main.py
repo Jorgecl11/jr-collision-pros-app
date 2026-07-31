@@ -5,7 +5,9 @@ from file_handler import (
     display_saved_customers, 
     display_last_customer, 
     find_customer_by_name,
+    find_customer_by_license_plate,
 )
+
 def main():
     show_welcome()
 
@@ -33,6 +35,10 @@ def main():
         find_customer_by_name()
 
     elif selected_choice == 5:
+        find_customer_by_license_plate()
+    
+
+    elif selected_choice == 6:
         print("Goodbye!")
 
 
