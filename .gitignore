@@ -1,9 +1,16 @@
+# Python cache and virtual environments
 __pycache__/
 .venv/
 venv/
 
+# Local environment settings
+.env
+
+# Local runtime/customer data
 customers.txt
-*_practice.py
+
+# Local SQLite databases
 *.db
 
-.env
+# Standalone practice scripts
+*_practice.py
