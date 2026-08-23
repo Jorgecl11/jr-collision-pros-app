@@ -1,16 +1,14 @@
 class Customer:
 
-    def __init__(self, name, phone_number, vin, license_plate):
-        self.name = name
+    def __init__(self, first_name, last_name, phone_number):
+        self.first_name = first_name
+        self.last_name = last_name
         self.phone_number = phone_number
-        self.vin = vin
-        self.license_plate = license_plate
+
 
     def display_summary(self):
         print()
         print("=" * 25)
         print("Customer Summary")
-        print(f"Name: {self.name.title()}")
+        print(f"Name: {self.first_name.title()} {self.last_name.title()}")
         print(f"Phone number: {self.phone_number}")
-        print(f"VIN: {self.vin.upper()}")
-        print(f"License Plate: {self.license_plate.upper()}")

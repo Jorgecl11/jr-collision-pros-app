@@ -8,7 +8,8 @@ def menu_option():
     print("1. Add Customer")
     print("2. View All Customers")
     print("3. View Last Customer")
-    print("4. Find Customer by Name")
+    print("4. Find Customer by First Name")
+    # print("4. Find Customer by First Name")
     print("5. Find Customer by License Plate")
     print("6. Exit")
 
