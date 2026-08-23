@@ -32,9 +32,11 @@ def main():
             vin,
             license_plate
             )
-        save_customer_and_vehicle(customer, vehicle)
-        customer.display_summary()
-        vehicle.display_summary()
+        saved = save_customer_and_vehicle(customer, vehicle)
+
+        if saved:
+            customer.display_summary()
+            vehicle.display_summary()
 
     elif selected_choice == 2:
         rows = get_all_customer_vehicles()

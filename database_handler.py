@@ -17,8 +17,10 @@ def save_customer_and_vehicle(customer, vehicle):
         )
         connection.commit()
         print("Customer and vehicle saved successfully.")
+        return True
     except sqlite3.IntegrityError:
         print("Error: VIN or license plate already exists.")
+        return False
     finally:
         connection.close()
 
