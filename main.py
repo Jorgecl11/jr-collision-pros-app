@@ -95,6 +95,9 @@ def main():
             print("Goodbye!")
             break
 
+        else:
+            print("Invalid menu option!")
+
 
 
 def get_customer_information():

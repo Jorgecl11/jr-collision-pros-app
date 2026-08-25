@@ -5,16 +5,21 @@ def show_welcome():
     print("=" * 25)
 
 def menu_option():
-    print()
-    print("1. Add Customer")
-    print("2. View All Customers")
-    print("3. View Last Customer")
-    print("4. Find Customer by First Name")
-    print("5. Find Customer by Last Name")
-    print("6. Find Customer by License Plate")
-    print("7. Find Customer by VIN")
-    print("0. Exit")
+    while True:
+        print()
+        print("1. Add Customer")
+        print("2. View All Customers")
+        print("3. View Last Customer")
+        print("4. Find Customer by First Name")
+        print("5. Find Customer by Last Name")
+        print("6. Find Customer by License Plate")
+        print("7. Find Customer by VIN")
+        print("0. Exit")
 
-    selected_choice = int(input("Choose an option: "))
-    print()
-    return selected_choice
+        try:
+            selected_choice = int(input("Choose an option: "))
+            print()
+            return selected_choice
+        except ValueError:
+            print()
+            print("Invalid input. Please enter a number.")
