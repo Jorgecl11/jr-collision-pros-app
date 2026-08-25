@@ -1,32 +1,31 @@
 # JR Collision Pros App
-Collision repair shop management system built in Python. Designed to manage customer intake, vehicle information, repair orders, and insurance claims.
+
+A Python command-line customer and vehicle intake system for a collision repair shop. Customer and vehicle records are stored locally in a SQLite database.
 
 ## Features
 
-- Customer welcome screen
-- Customer name intake
-- Vehicle information intake
-  - VIN
+- Add a customer and their vehicle
+- Store customer and vehicle records in SQLite
+- Prevent duplicate VINs and license plates
+- View all customer and vehicle records
+- View the most recently added customer record
+- Search customers by:
+  - First name
+  - Last name
   - License plate
-- Customer summary
-- Repair status counting using Python dictionaries
+  - VIN
+- Input validation for non-numeric and invalid menu selections
+- Persistent menu that continues until the user selects Exit
+
+## Technologies
+
+- Python
+- SQLite
+- Git and GitHub
 
 ## Installation
 
-1. Clone the repository
+1. Clone the repository:
 
 ```bash
 git clone https://github.com/Jorgecl11/jr-collision-pros-app.git
-```
-
-2. Change into the project directory
-
-```bash
-cd jr-collision-pros-app
-```
-
-3. Run the application
-
-```bash
-python main.py
-```
