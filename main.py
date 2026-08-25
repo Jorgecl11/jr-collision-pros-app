@@ -15,84 +15,85 @@ from menu import show_welcome, menu_option
 def main():
     initialize_database()
     show_welcome()
+    while True:
 
-    selected_choice = menu_option()
-    if selected_choice == 1:
-        first_name, last_name, phone_number = get_customer_information()
-        year, make, model, vin, license_plate = get_vehicle_information()
-        
+        selected_choice = menu_option()
+        if selected_choice == 1:
+            first_name, last_name, phone_number = get_customer_information()
+            year, make, model, vin, license_plate = get_vehicle_information()
 
-        customer = Customer(
-            first_name,
-            last_name,
-            phone_number
-            )
-        vehicle = Vehicle(
-            year,
-            make,
-            model,
-            vin,
-            license_plate
-            )
-        saved = save_customer_and_vehicle(customer, vehicle)
+            customer = Customer(
+                first_name,
+                last_name,
+                phone_number
+                )
+            vehicle = Vehicle(
+                year,
+                make,
+                model,
+                vin,
+                license_plate
+                )
+            saved = save_customer_and_vehicle(customer, vehicle)
 
-        if saved:
-            customer.display_summary()
-            vehicle.display_summary()
+            if saved:
+                customer.display_summary()
+                vehicle.display_summary()
 
-    elif selected_choice == 2:
-        rows = get_all_customer_vehicles()
-        if rows:
-            for row in rows:
+        elif selected_choice == 2:
+            rows = get_all_customer_vehicles()
+            if rows:
+                for row in rows:
+                    display_customer_vehicle(row)
+            else:
+                print("No customers found.")
+
+        elif selected_choice == 3:
+            row = get_last_customer_vehicle()
+            if row:
                 display_customer_vehicle(row)
-        else:
-            print("No customers found.")
+            else:
+                print("No customers found.")
 
-    elif selected_choice == 3:
-        row = get_last_customer_vehicle()
-        if row:
-            display_customer_vehicle(row)
-        else:
-            print("No customers found.")
+        elif selected_choice == 4:
+            first_name = input("Enter first name to search: ").strip().title()
+            rows = find_customers_by_first_name(first_name)
+            if rows:
+                for row in rows:
+                    display_customer_vehicle(row)
+            else:
+                print("No customers found.")
 
-    elif selected_choice == 4:
-        first_name = input("Enter first name to search: ").strip().title()
-        rows = find_customers_by_first_name(first_name)
-        if rows:
-            for row in rows:
+        elif selected_choice == 5:
+            last_name = input("Enter last name to search: ").strip().title()
+            rows = find_customers_by_last_name(last_name)
+            if rows:
+                for row in rows:
+                    display_customer_vehicle(row)
+            else:
+                print("No customers found.")
+
+
+        elif selected_choice == 6:
+            license_plate = input("Enter license plate to search: ").strip().upper()
+            row = find_customer_by_license_plate(license_plate)
+            if row:
                 display_customer_vehicle(row)
-        else:
-            print("No customers found.")
+            else:
+                print("No customers found.")
 
-    elif selected_choice == 5:
-        last_name = input("Enter last name to search: ").strip().title()
-        rows = find_customers_by_last_name(last_name)
-        if rows:
-            for row in rows:
+        elif selected_choice == 7:
+            vin = input("Enter Vin to search: ").strip().upper()
+            row = find_customer_by_vin(vin)
+            if row:
                 display_customer_vehicle(row)
-        else:
-            print("No customers found.")
+            else:
+                print("No customers found.")
 
 
-    elif selected_choice == 6:
-        license_plate = input("Enter license plate to search: ").strip().upper()
-        row = find_customer_by_license_plate(license_plate)
-        if row:
-            display_customer_vehicle(row)
-        else:
-            print("No customers found.")
-
-    elif selected_choice == 7:
-        vin = input("Enter Vin to search: ").strip().upper()
-        row = find_customer_by_vin(vin)
-        if row:
-            display_customer_vehicle(row)
-        else:
-            print("No customers found.")
-
-
-    elif selected_choice == 0:
-        print("Goodbye!")
+        elif selected_choice == 0:
+            print("Goodbye!")
+            break
 
 
 
