@@ -9,9 +9,10 @@ def menu_option():
     print("2. View All Customers")
     print("3. View Last Customer")
     print("4. Find Customer by First Name")
-    # print("4. Find Customer by First Name")
-    print("5. Find Customer by License Plate")
-    print("6. Exit")
+    print("5. Find Customer by Last Name")
+    print("6. Find Customer by License Plate")
+    print("7. Find customer by VIN")
+    print("0. Exit")
 
     selected_choice = int(input("Choose an option: "))
     return selected_choice

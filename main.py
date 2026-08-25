@@ -6,7 +6,9 @@ from database_handler import (
     get_all_customer_vehicles,
     get_last_customer_vehicle,
     find_customers_by_first_name,
+    find_customers_by_last_name,
     find_customer_by_license_plate,
+    find_customer_by_vin,
 )
 from menu import show_welcome, menu_option
 
@@ -83,8 +85,24 @@ def main():
         else:
             print("No customers found.")
 
-
     elif selected_choice == 5:
+        last_name = input("Enter last name to search: ").strip().title()
+        rows = find_customers_by_last_name(last_name)
+        if rows:
+            for customer in rows:
+                print(
+                f"Customer ID: {customer[0]} | "
+                f"Name: {customer[1]} {customer[2]} | "
+                f"Phone: {customer[3]}\n"
+                f"Vehicle: {customer[4]} {customer[5]} {customer[6]} | "
+                f"VIN: {customer[7]} | "
+                f"License Plate: {customer[8]}"
+                    )
+        else:
+            print("No customers found.")
+
+
+    elif selected_choice == 6:
         license_plate = input("Enter license plate to search: ").strip().upper()
         row = find_customer_by_license_plate(license_plate)
         if row:
@@ -98,8 +116,23 @@ def main():
             )
         else:
             print("No customers found.")
+    elif selected_choice == 7:
+        vin = input("Enter Vin to search: ").strip().upper()
+        row = find_customer_by_vin(vin)
+        if row:
+            print(
+                f"Customer ID: {row[0]} | "
+                f"Name: {row[1]} {row[2]} | "
+                f"Phone: {row[3]}\n"
+                f"Vehicle: {row[4]} {row[5]} {row[6]} | "
+                f"VIN: {row[7]} | "
+                f"License Plate: {row[8]}"
+            )
+        else:
+            print("No customers found.")
 
-    elif selected_choice == 6:
+
+    elif selected_choice == 0:
         print("Goodbye!")
 
 

@@ -69,6 +69,22 @@ def find_customers_by_first_name(first_name):
     connection.close()
     return rows
 
+def find_customers_by_last_name(last_name):
+     connection = get_connection()
+     cursor = connection.cursor()
+     cursor.execute("""
+     SELECT customers.id, customers.first_name, customers.last_name, customers.phone, vehicles.year, vehicles.make, vehicles.model, vehicles.vin, vehicles.license_plate
+     FROM customers
+     LEFT JOIN vehicles
+     ON customers.id = vehicles.customer_id
+     WHERE customers.last_name = ?
+     """,
+     (last_name,)
+     )
+     rows = cursor.fetchall()
+     connection.close()
+     return rows
+
 def find_customer_by_license_plate(license_plate):
         connection = get_connection()
         cursor = connection.cursor()
@@ -84,3 +100,20 @@ def find_customer_by_license_plate(license_plate):
         row = cursor.fetchone()
         connection.close()
         return row
+
+def find_customer_by_vin(vin):
+     connection = get_connection()
+     cursor = connection.cursor()
+     cursor.execute("""
+     SELECT customers.id, customers.first_name, customers.last_name, customers.phone, vehicles.year, vehicles.make, vehicles.model, vehicles.vin, vehicles.license_plate
+     FROM customers
+     LEFT JOIN vehicles
+     ON customers.id = vehicles.customer_id
+     WHERE vehicles.vin = ?
+     """,
+     (vin,)
+     )
+
+     row = cursor.fetchone()
+     connection.close()
+     return row
