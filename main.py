@@ -9,7 +9,9 @@ from database_handler import (
     find_customers_by_last_name,
     find_customer_by_license_plate,
     find_customer_by_vin,
-)
+    update_customer_phone_by_license_plate,
+    )
+
 from menu import show_welcome, menu_option
 
 def main():
@@ -89,6 +91,31 @@ def main():
                 display_customer_vehicle(row)
             else:
                 print("No customers found.")
+
+        elif selected_choice == 8:
+            while True:
+                license_plate = input("Enter license plate or 0 to return: ").strip().upper()
+
+                if license_plate == "0":
+                    break
+                row = find_customer_by_license_plate(license_plate)
+
+                if row:
+                    while True:
+                        new_phone = input("Enter new phone number or 0 to return to license plate search: ").strip()
+
+                        if new_phone == "0":
+                            break
+
+                        phone_digits = new_phone.replace("-", "")
+
+                        if phone_digits.isdigit() and len(phone_digits) == 10:
+                            update_customer_phone_by_license_plate(license_plate, new_phone)
+                            break
+                        else:
+                            print("Enter a valid 10-digit phone number, such as 408-555-1234.")
+                else:
+                    print("No customer found with that license plate.")
 
 
         elif selected_choice == 0:

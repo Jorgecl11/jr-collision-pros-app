@@ -14,6 +14,7 @@ def menu_option():
         print("5. Find Customer by Last Name")
         print("6. Find Customer by License Plate")
         print("7. Find Customer by VIN")
+        print("8. Update Customer Phone Number")
         print("0. Exit")
 
         try:

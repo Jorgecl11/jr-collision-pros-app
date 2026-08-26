@@ -117,3 +117,28 @@ def find_customer_by_vin(vin):
      row = cursor.fetchone()
      connection.close()
      return row
+
+def update_customer_phone_by_license_plate(license_plate, new_phone):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute(
+        """
+        UPDATE customers
+        SET phone = ?
+        WHERE id = (
+            SELECT customer_id
+            FROM vehicles
+            WHERE license_plate = ?
+        )
+
+        """,
+        (new_phone, license_plate)
+    )
+    if cursor.rowcount > 0:
+        connection.commit()
+        print("Phone number updated successfully.")
+
+    else:
+        print("No customer found with that license plate.")
+
+    connection.close()
