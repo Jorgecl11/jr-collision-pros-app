@@ -18,4 +18,4 @@ customers.txt
 # Temporary manual test scripts
 test_vehicle.py
 test_database_handler.py
-
+delete_practice.py

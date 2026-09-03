@@ -142,3 +142,18 @@ def update_customer_phone_by_license_plate(license_plate, new_phone):
         print("No customer found with that license plate.")
 
     connection.close()
+
+def delete_vehicle_by_license_plate(license_plate):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute(
+            "DELETE FROM vehicles WHERE license_plate = ?",
+            (license_plate,)
+        )
+        delete_count = cursor.rowcount
+        connection.commit()
+        return delete_count
+    finally:
+        connection.close()

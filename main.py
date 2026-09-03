@@ -10,6 +10,7 @@ from database_handler import (
     find_customer_by_license_plate,
     find_customer_by_vin,
     update_customer_phone_by_license_plate,
+    delete_vehicle_by_license_plate,
     )
 
 from menu import show_welcome, menu_option
@@ -117,7 +118,28 @@ def main():
                 else:
                     print("No customer found with that license plate.")
 
+        elif selected_choice == 9:
+            while True:
+                license_plate = input("Enter license plate to delete or 0 to return: ").strip().upper()
 
+                if license_plate == "0":
+                    break
+                row = find_customer_by_license_plate(license_plate)
+
+                if row:
+                    display_customer_vehicle(row)
+                    confirmation = input(f"Delete {license_plate}? Type yes to confirm: ").strip().lower()
+                    if confirmation == "yes":
+                        delete_count = delete_vehicle_by_license_plate(license_plate)
+
+                        if delete_count > 0:
+                            print("Vehicle deleted. Customer record kept.")
+                        else:
+                            print("Vehicle not found.")
+                    else:
+                        print("Deletion cancelled.")
+                else:
+                    print("No vehicle found with that license plate.")
         elif selected_choice == 0:
             print("Goodbye!")
             break
