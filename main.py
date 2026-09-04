@@ -172,12 +172,17 @@ def display_customer_vehicle(row):
     print(
         f"Customer ID: {row[0]} | "
         f"Name: {row[1]} {row[2]} | "
-        f"Phone: {row[3]}\n"
-        f"Vehicle: {row[4]} {row[5]} {row[6]} | "
-        f"VIN: {row[7]} | "
-        f"License Plate: {row[8]}"
+        f"Phone: {row[3]}"
     )
 
+    if row[4] is None:
+        print("No vehicle on file.")
+    else:
+        print(
+            f"Vehicle: {row[4]} {row[5]} {row[6]} | "
+            f"VIN: {row[7]} | "
+            f"License Plate: {row[8]}"
+        )
 
 
 if __name__ == "__main__":
