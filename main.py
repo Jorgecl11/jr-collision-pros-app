@@ -11,6 +11,8 @@ from database_handler import (
     find_customer_by_vin,
     update_customer_phone_by_license_plate,
     delete_vehicle_by_license_plate,
+    add_vehicle_to_existing_customer,
+    find_customer_by_id,
     )
 
 from menu import show_welcome, menu_option
@@ -140,6 +142,45 @@ def main():
                         print("Deletion cancelled.")
                 else:
                     print("No vehicle found with that license plate.")
+
+        elif selected_choice == 10:
+            while True:
+                try:
+                    customer_id = int(input("Enter customer ID or 0 to return: "))
+
+                    if customer_id == 0:
+                        break
+                except ValueError:
+                    print("Invalid input. Please enter a number.")
+                    continue
+                customer = find_customer_by_id(customer_id)
+                if customer:
+                    print(
+                        f"Customer ID: {customer[0]} | "
+                        f"Name: {customer[1]} {customer[2]} | "
+                        f"Phone: {customer[3]}"
+                    )
+                    confirmation = input(f"Add vehicle to {customer[1]} {customer[2]}? Type yes to confirm: ").strip().lower()
+                    if confirmation == "yes":
+                        year, make, model, vin, license_plate = get_vehicle_information()
+                        vehicle = Vehicle(
+                            year,
+                            make,
+                            model,
+                            vin,
+                            license_plate
+                        )
+                        saved = add_vehicle_to_existing_customer(customer_id, vehicle)
+                        if saved:
+                            vehicle.display_summary()
+                            break
+                    else:
+                        print("Vehicle addition cancelled.")
+
+                else:
+                    print("No customer found with that ID.")
+
+
         elif selected_choice == 0:
             print("Goodbye!")
             break

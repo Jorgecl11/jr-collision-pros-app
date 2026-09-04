@@ -157,3 +157,37 @@ def delete_vehicle_by_license_plate(license_plate):
         return delete_count
     finally:
         connection.close()
+
+def add_vehicle_to_existing_customer(customer_id, vehicle):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    try:
+        cursor.execute(
+            "INSERT INTO vehicles (customer_id, year, make, model, vin, license_plate) VALUES (?, ?, ?, ?, ?, ?)",
+            (customer_id, vehicle.year, vehicle.make, vehicle.model, vehicle.vin, vehicle.license_plate)
+        )
+        connection.commit()
+        print("Vehicle added successfully.")
+        return True
+    except sqlite3.IntegrityError:
+        print("Error: VIN or license plate already exists.")
+        return False
+    finally:
+        connection.close()
+
+def find_customer_by_id(customer_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    cursor.execute(
+        """SELECT customers.id, customers.first_name, customers.last_name, customers.phone
+        FROM customers
+        WHERE customers.id = ?
+        """,
+        (customer_id,)
+    )
+
+    row = cursor.fetchone()
+    connection.close()
+    return row

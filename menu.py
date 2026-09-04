@@ -16,6 +16,7 @@ def menu_option():
         print("7. Find Customer by VIN")
         print("8. Update Customer Phone Number")
         print("9. Delete Vehicle")
+        print("10. Add Vehicle to Existing Customer")
         print("0. Exit")
 
         try:
