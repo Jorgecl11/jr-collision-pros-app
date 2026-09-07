@@ -97,11 +97,16 @@ def main():
                 print("No customers found.")
         elif selected_choice == 8:
             while True:
-                phone = input("Enter phone number or 0 to return: ").strip()
+                customer_phone = input("Enter phone number or 0 to return: ").strip()
+                phone_digits = customer_phone.replace("-","")
 
-                if phone == "0":
+                if customer_phone == "0":
                     break
-                rows = find_customers_by_phone(phone)
+                if not phone_digits.isdigit() or len(phone_digits) != 10:
+                    print("Invalid phone number.")
+                    continue
+                formatted_phone = (f"{phone_digits[:3]}-{phone_digits[3:6]}-{phone_digits[6:]}")
+                rows = find_customers_by_phone(formatted_phone)
 
                 if rows:
                     for row in rows:
