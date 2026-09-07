@@ -7,6 +7,7 @@ from database_handler import (
     get_last_customer_vehicle,
     find_customers_by_first_name,
     find_customers_by_last_name,
+    find_customers_by_phone,
     find_customer_by_license_plate,
     find_customer_by_vin,
     update_customer_phone_by_license_plate,
@@ -94,8 +95,22 @@ def main():
                 display_customer_vehicle(row)
             else:
                 print("No customers found.")
-
         elif selected_choice == 8:
+            while True:
+                phone = input("Enter phone number or 0 to return: ").strip()
+
+                if phone == "0":
+                    break
+                rows = find_customers_by_phone(phone)
+
+                if rows:
+                    for row in rows:
+                        display_customer_vehicle(row)
+                else:
+                    print("No customers found.")
+
+
+        elif selected_choice == 9:
             while True:
                 license_plate = input("Enter license plate or 0 to return: ").strip().upper()
 
@@ -120,7 +135,7 @@ def main():
                 else:
                     print("No customer found with that license plate.")
 
-        elif selected_choice == 9:
+        elif selected_choice == 10:
             while True:
                 license_plate = input("Enter license plate to delete or 0 to return: ").strip().upper()
 
@@ -143,7 +158,7 @@ def main():
                 else:
                     print("No vehicle found with that license plate.")
 
-        elif selected_choice == 10:
+        elif selected_choice == 11:
             while True:
                 try:
                     customer_id = int(input("Enter customer ID or 0 to return: "))

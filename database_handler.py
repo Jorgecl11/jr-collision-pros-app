@@ -118,6 +118,22 @@ def find_customer_by_vin(vin):
      connection.close()
      return row
 
+def find_customers_by_phone(phone):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("""
+    SELECT customers.id, customers.first_name, customers.last_name, customers.phone, vehicles.year, vehicles.make, vehicles.model, vehicles.vin, vehicles.license_plate
+    FROM customers
+    LEFT JOIN vehicles
+    ON customers.id = vehicles.customer_id
+    WHERE customers.phone = ?
+    """,
+    (phone,))
+
+    rows = cursor.fetchall()
+    connection.close()
+    return rows
+
 def update_customer_phone_by_license_plate(license_plate, new_phone):
     connection = get_connection()
     cursor = connection.cursor()

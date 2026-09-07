@@ -1,7 +1,7 @@
 def show_welcome():
     print("=" * 25)
-    print("JR Collision Pros")
-    print("Customer Intake System")
+    print("JR Collision Pros".center(25))
+    print("Customer Intake System".center(25))
     print("=" * 25)
 
 def menu_option():
@@ -14,9 +14,10 @@ def menu_option():
         print("5. Find Customer by Last Name")
         print("6. Find Customer by License Plate")
         print("7. Find Customer by VIN")
-        print("8. Update Customer Phone Number")
-        print("9. Delete Vehicle")
-        print("10. Add Vehicle to Existing Customer")
+        print("8. Find Customer by Phone Number")
+        print("9. Update Customer Phone Number")
+        print("10. Delete Vehicle")
+        print("11. Add Vehicle to Existing Customer")
         print("0. Exit")
 
         try:
