@@ -63,22 +63,28 @@ def main():
                 print("No customers found.")
 
         elif selected_choice == 4:
-            first_name = input("Enter first name to search: ").strip().title()
-            rows = find_customers_by_first_name(first_name)
-            if rows:
-                for row in rows:
-                    display_customer_vehicle(row)
-            else:
-                print("No customers found.")
+            while True:
+                first_name = input("Enter first name to search or 0 to return: ").strip().title()
+                if first_name == "0":
+                    break
+                rows = find_customers_by_first_name(first_name)
+                if rows:
+                    for row in rows:
+                        display_customer_vehicle(row)
+                else:
+                    print("No customers found.")
 
         elif selected_choice == 5:
-            last_name = input("Enter last name to search: ").strip().title()
-            rows = find_customers_by_last_name(last_name)
-            if rows:
-                for row in rows:
-                    display_customer_vehicle(row)
-            else:
-                print("No customers found.")
+            while True:
+                last_name = input("Enter last name to search or 0 to return: ").strip().title()
+                if last_name == "0":
+                    break
+                rows = find_customers_by_last_name(last_name)
+                if rows:
+                    for row in rows:
+                        display_customer_vehicle(row)
+                else:
+                    print("No customers found.")
 
 
         elif selected_choice == 6:
@@ -101,20 +107,27 @@ def main():
 
 
         elif selected_choice == 7:
-            license_plate = input("Enter license plate to search: ").strip().upper()
-            row = find_customer_by_license_plate(license_plate)
-            if row:
-                display_customer_vehicle(row)
-            else:
-                print("No customers found.")
+            while True:
+                license_plate = input("Enter license plate to search or 0 to return: ").strip().upper()
+                if license_plate == "0":
+                    break
+
+                row = find_customer_by_license_plate(license_plate)
+                if row:
+                    display_customer_vehicle(row)
+                else:
+                    print("No customers found.")
 
         elif selected_choice == 8:
-            vin = input("Enter Vin to search: ").strip().upper()
-            row = find_customer_by_vin(vin)
-            if row:
-                display_customer_vehicle(row)
-            else:
-                print("No customers found.")
+            while True:
+                vin = input("Enter VIN to search or 0 to return: ").strip().upper()
+                if vin == "0":
+                    break
+                row = find_customer_by_vin(vin)
+                if row:
+                    display_customer_vehicle(row)
+                else:
+                    print("No customers found.")
 
         elif selected_choice == 9:
             while True:
