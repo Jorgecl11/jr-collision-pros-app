@@ -244,19 +244,32 @@ def main():
         else:
             print("Invalid menu option!")
 
-
-
 def get_customer_information():
     first_name = input("Enter first name: ").title()
     last_name = input("Enter last name: ").title()
-    phone_number = input("Enter phone number: ")
+    while True:
+        phone_number = input("Enter phone number: ")
+        phone_digits = phone_number.replace("-","")
+        if phone_digits.isdigit() and len(phone_digits) == 10:
+            formatted_phone = f"{phone_digits[:3]}-{phone_digits[3:6]}-{phone_digits[6:]}"
+            break
+        else:
+            print("Invalid phone number. Enter a valid 10-digit phone number, such as 408-555-1234.")
+            continue
+
     print(f"Welcome, {first_name} {last_name}")
-    return first_name, last_name, phone_number
+    return first_name, last_name, formatted_phone
 
 def get_vehicle_information():
     print("\nVehicle Information")
     print("-" * 20)
-    year = int(input("Enter Year: "))
+    while True:
+        try:
+            year = int(input("Enter Year: "))
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+            continue
     make = input("Enter make: ").title()
     model = input("Enter model: ").title()
     vin = input("Enter vin number: ").upper()
@@ -281,6 +294,6 @@ def display_customer_vehicle(row):
             f"License Plate: {row[8]}"
         )
 
-
+    print()
 if __name__ == "__main__":
     main()
