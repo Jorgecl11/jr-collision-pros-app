@@ -14,6 +14,7 @@ from database_handler import (
     delete_vehicle_by_license_plate,
     add_vehicle_to_existing_customer,
     find_customer_by_id,
+    find_customers_by_full_name,
     )
 
 from menu import show_welcome, menu_option
@@ -81,6 +82,25 @@ def main():
 
 
         elif selected_choice == 6:
+            while True:
+
+                first_name = input("Enter first name or 0 to return: ").strip().title()
+                if first_name == "0":
+                    break
+                last_name = input("Enter last name or 0 to return: ").strip().title()
+                if last_name == "0":
+                    break
+
+                rows = find_customers_by_full_name(first_name, last_name)
+                if rows:
+                    for row in rows:
+                        display_customer_vehicle(row)
+                else:
+                    print("No customer found.")
+
+
+
+        elif selected_choice == 7:
             license_plate = input("Enter license plate to search: ").strip().upper()
             row = find_customer_by_license_plate(license_plate)
             if row:
@@ -88,14 +108,15 @@ def main():
             else:
                 print("No customers found.")
 
-        elif selected_choice == 7:
+        elif selected_choice == 8:
             vin = input("Enter Vin to search: ").strip().upper()
             row = find_customer_by_vin(vin)
             if row:
                 display_customer_vehicle(row)
             else:
                 print("No customers found.")
-        elif selected_choice == 8:
+
+        elif selected_choice == 9:
             while True:
                 customer_phone = input("Enter phone number or 0 to return: ").strip()
                 phone_digits = customer_phone.replace("-","")
@@ -115,7 +136,7 @@ def main():
                     print("No customers found.")
 
 
-        elif selected_choice == 9:
+        elif selected_choice == 10:
             while True:
                 license_plate = input("Enter license plate or 0 to return: ").strip().upper()
 
@@ -140,7 +161,7 @@ def main():
                 else:
                     print("No customer found with that license plate.")
 
-        elif selected_choice == 10:
+        elif selected_choice == 11:
             while True:
                 license_plate = input("Enter license plate to delete or 0 to return: ").strip().upper()
 
@@ -163,7 +184,7 @@ def main():
                 else:
                     print("No vehicle found with that license plate.")
 
-        elif selected_choice == 11:
+        elif selected_choice == 12:
             while True:
                 try:
                     customer_id = int(input("Enter customer ID or 0 to return: "))

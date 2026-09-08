@@ -85,6 +85,22 @@ def find_customers_by_last_name(last_name):
      connection.close()
      return rows
 
+def find_customers_by_full_name(first_name, last_name):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("""
+    SELECT customers.id, customers.first_name, customers.last_name, customers.phone, vehicles.year, vehicles.make, vehicles.model, vehicles.vin, vehicles.license_plate
+    FROM customers
+    LEFT JOIN vehicles
+    ON customers.id = vehicles.customer_id
+    WHERE customers.first_name = ? and customers.last_name = ?
+    """,
+    (first_name, last_name,)
+    )
+    rows = cursor.fetchall()
+    connection.close()
+    return rows
+
 def find_customer_by_license_plate(license_plate):
         connection = get_connection()
         cursor = connection.cursor()
