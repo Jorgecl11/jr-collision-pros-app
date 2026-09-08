@@ -158,6 +158,7 @@ def main():
                 row = find_customer_by_license_plate(license_plate)
 
                 if row:
+                    display_customer_vehicle(row)
                     while True:
                         new_phone = input("Enter new phone number or 0 to return to license plate search: ").strip()
 
@@ -167,7 +168,8 @@ def main():
                         phone_digits = new_phone.replace("-", "")
 
                         if phone_digits.isdigit() and len(phone_digits) == 10:
-                            update_customer_phone_by_license_plate(license_plate, new_phone)
+                            formatted_phone = f"{phone_digits[:3]}-{phone_digits[3:6]}-{phone_digits[6:]}"
+                            update_customer_phone_by_license_plate(license_plate, formatted_phone)
                             break
                         else:
                             print("Enter a valid 10-digit phone number, such as 408-555-1234.")
