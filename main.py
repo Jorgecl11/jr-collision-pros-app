@@ -249,7 +249,7 @@ def get_customer_information():
     last_name = input("Enter last name: ").title()
     while True:
         phone_number = input("Enter phone number: ")
-        phone_digits = phone_number.replace("-","")
+        phone_digits = phone_number.replace("-", "")
         if phone_digits.isdigit() and len(phone_digits) == 10:
             formatted_phone = f"{phone_digits[:3]}-{phone_digits[3:6]}-{phone_digits[6:]}"
             break
