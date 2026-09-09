@@ -27,25 +27,31 @@ def main():
         selected_choice = menu_option()
         if selected_choice == 1:
             first_name, last_name, phone_number = get_customer_information()
-            year, make, model, vin, license_plate = get_vehicle_information()
 
             customer = Customer(
                 first_name,
                 last_name,
                 phone_number
                 )
-            vehicle = Vehicle(
-                year,
-                make,
-                model,
-                vin,
-                license_plate
-                )
-            saved = save_customer_and_vehicle(customer, vehicle)
+            while True:
+                year, make, model, vin, license_plate = get_vehicle_information()
+                vehicle = Vehicle(
+                    year,
+                    make,
+                    model,
+                    vin,
+                    license_plate
+                    )
+                saved = save_customer_and_vehicle(customer, vehicle)
 
-            if saved:
-                customer.display_summary()
-                vehicle.display_summary()
+                if saved:
+                    customer.display_summary()
+                    vehicle.display_summary()
+                    break
+                else:
+                    choice = input("Try another vehicle? Type yes to retry or anything else to return: ").strip().lower()
+                    if choice != "yes":
+                        break
 
         elif selected_choice == 2:
             rows = get_all_customer_vehicles()
