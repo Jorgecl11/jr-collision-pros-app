@@ -266,10 +266,13 @@ def get_vehicle_information():
     while True:
         try:
             year = int(input("Enter Year: "))
-            break
+            if 1886 <= year <= 2027:
+                break
+            else:
+                print("Invalid year. Enter a year from 1886 through 2027.")
         except ValueError:
             print("Invalid input. Please enter a number.")
-            continue
+
     make = input("Enter make: ").title()
     model = input("Enter model: ").title()
     vin = input("Enter vin number: ").upper()
