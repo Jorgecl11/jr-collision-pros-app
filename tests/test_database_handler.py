@@ -3,7 +3,7 @@ import database
 from customer import Customer
 from vehicle import Vehicle
 from database import initialize_database
-from database_handler import save_customer_and_vehicle, get_all_customer_vehicles
+from database_handler import save_customer_and_vehicle, get_all_customer_vehicles, delete_vehicle_by_license_plate
 
 def test_save_customer_and_vehicle(tmp_path, monkeypatch):
     test_db = tmp_path / "test_collision_pros.db"
@@ -45,3 +45,23 @@ def test_duplicate_vin_rolls_back_customer(tmp_path, monkeypatch):
     row = rows[0]
     assert row[1] == "Test"
     assert row[7] == "DUPLICATEVIN"
+
+
+def test_delete_vehicle_keeps_customer(tmp_path, monkeypatch):
+    test_db = tmp_path / "test_collision_pros.db"
+    monkeypatch.setattr(database, "DB_FILE", str(test_db))
+    initialize_database()
+
+    customer = Customer("Test", "Delete", "408-555-0002")
+    vehicle = Vehicle(2024, "Honda", "Accord", "DELETEVIN123", "DELETE123")
+
+    saved = save_customer_and_vehicle(customer, vehicle)
+    assert saved is True
+    delete_count = delete_vehicle_by_license_plate("DELETE123")
+
+    assert delete_count == 1
+    rows = get_all_customer_vehicles()
+    assert len(rows) == 1
+    row = rows[0]
+    assert row[1] == "Test"
+    assert row[4] is None
