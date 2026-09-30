@@ -94,3 +94,10 @@ def test_add_vehicle_to_existing_customer(tmp_path, monkeypatch):
     assert len(rows) == 2
     assert rows[0][0] == customer_id
     assert rows[1][0] == customer_id
+
+    vins = []
+    for row in rows:
+        vins.append(row[7])
+
+    assert "FIRSTVIN123" in vins
+    assert "SECONDVIN123" in vins
