@@ -101,3 +101,26 @@ def test_add_vehicle_to_existing_customer(tmp_path, monkeypatch):
 
     assert "FIRSTVIN123" in vins
     assert "SECONDVIN123" in vins
+
+
+def test_duplicate_license_plate_rolls_back_customer(tmp_path, monkeypatch):
+    test_db = tmp_path / "test_collision_pros.db"
+    monkeypatch.setattr(database, "DB_FILE", str(test_db))
+    initialize_database()
+
+    first_customer = Customer("Ingenium", "Labs", "408-555-0004")
+    first_vehicle = Vehicle(2027, "Mercedes Benz", "GLE 63", "FIRSTUNIQUEVIN", "DUPLICATE123")
+
+    first_saved = save_customer_and_vehicle(first_customer, first_vehicle)
+    assert first_saved is True
+
+    second_customer = Customer("Techne", "Labs", "408-555-0005")
+    second_vehicle = Vehicle(2027, "BMW", "X5 M", "SECONDUNIQUEVIN", "DUPLICATE123")
+
+    second_saved = save_customer_and_vehicle(second_customer, second_vehicle)
+    assert second_saved is False
+
+    rows = get_all_customer_vehicles()
+    assert len(rows) == 1
+    row = rows[0]
+    assert row[8] == "DUPLICATE123"
