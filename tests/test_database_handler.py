@@ -8,6 +8,7 @@ from database_handler import(
     get_all_customer_vehicles,
     delete_vehicle_by_license_plate,
     add_vehicle_to_existing_customer,
+    update_customer_phone_by_license_plate,
 )
 def test_save_customer_and_vehicle(tmp_path, monkeypatch):
     test_db = tmp_path / "test_collision_pros.db"
@@ -124,3 +125,36 @@ def test_duplicate_license_plate_rolls_back_customer(tmp_path, monkeypatch):
     assert len(rows) == 1
     row = rows[0]
     assert row[8] == "DUPLICATE123"
+
+def test_update_customer_phone_by_license_plate(tmp_path, monkeypatch):
+    test_db = tmp_path / "test_collision_pros.db"
+    monkeypatch.setattr(database, "DB_FILE", str(test_db))
+    initialize_database()
+
+    first_customer = Customer("First", "Test", "408-555-0006")
+    first_vehicle = Vehicle(2027, "Toyota", "Prius", "OLDPHONE123", "OLD123")
+
+    first_saved = save_customer_and_vehicle(first_customer, first_vehicle)
+    assert first_saved is True
+    update_customer_phone_by_license_plate("OLD123", "408-555-0007")
+
+    rows = get_all_customer_vehicles()
+    row = rows[0]
+    assert row[3] == "408-555-0007"
+
+def test_update_customer_phone_with_unknown_plate(tmp_path, monkeypatch):
+    test_db = tmp_path / "test_collision_pros.db"
+    monkeypatch.setattr(database, "DB_FILE", str(test_db))
+    initialize_database()
+
+    real_customer = Customer("First", "Test", "408-555-0007")
+    real_vehicle = Vehicle(2027, "Toyota", "Prius", "OLDPHONE123", "OLD123")
+
+    real_saved = save_customer_and_vehicle(real_customer, real_vehicle)
+    assert real_saved is True
+    update_customer_phone_by_license_plate("DOESNOTEXIST", "408-555-0008")
+
+    rows = get_all_customer_vehicles()
+
+    row = rows[0]
+    assert row[3] == "408-555-0007"
