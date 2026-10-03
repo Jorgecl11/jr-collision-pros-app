@@ -10,6 +10,7 @@ from database_handler import(
     add_vehicle_to_existing_customer,
     update_customer_phone_by_license_plate,
     find_customer_by_license_plate,
+    find_customer_by_vin,
 )
 def test_save_customer_and_vehicle(tmp_path, monkeypatch):
     test_db = tmp_path / "test_collision_pros.db"
@@ -187,4 +188,32 @@ def test_find_customer_with_unknown_plate(tmp_path, monkeypatch):
     saved = save_customer_and_vehicle(first_customer, first_vehicle)
     assert saved is True
     result = find_customer_by_license_plate("NOTREAL")
+    assert result is None
+
+
+def test_find_customer_by_vin(tmp_path, monkeypatch):
+    test_db = tmp_path / "test_collision_pros.db"
+    monkeypatch.setattr(database, "DB_FILE", str(test_db))
+    initialize_database()
+
+    first_customer = Customer("First", "Test", "408-555-0007")
+    first_vehicle = Vehicle(2027, "Toyota", "Prius", "OLDPHONE123", "OLD123")
+
+    saved = save_customer_and_vehicle(first_customer, first_vehicle)
+    assert saved is True
+    result = find_customer_by_vin("OLDPHONE123")
+    assert result[7] == "OLDPHONE123"
+
+
+def test_find_customer_by_unknown_vin(tmp_path, monkeypatch):
+    test_db = tmp_path / "test_collision_pros.db"
+    monkeypatch.setattr(database, "DB_FILE", str(test_db))
+    initialize_database()
+
+    first_customer = Customer("First", "Test", "408-555-0007")
+    first_vehicle = Vehicle(2027, "Toyota", "Prius", "OLDPHONE123", "OLD123")
+
+    saved = save_customer_and_vehicle(first_customer, first_vehicle)
+    assert saved is True
+    result = find_customer_by_vin("UNKNOWNVIN")
     assert result is None
