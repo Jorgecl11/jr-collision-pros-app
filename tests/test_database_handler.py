@@ -11,6 +11,7 @@ from database_handler import(
     update_customer_phone_by_license_plate,
     find_customer_by_license_plate,
     find_customer_by_vin,
+    find_customers_by_first_name,
 )
 def test_save_customer_and_vehicle(tmp_path, monkeypatch):
     test_db = tmp_path / "test_collision_pros.db"
@@ -217,3 +218,26 @@ def test_find_customer_by_unknown_vin(tmp_path, monkeypatch):
     assert saved is True
     result = find_customer_by_vin("UNKNOWNVIN")
     assert result is None
+
+def test_find_customers_by_first_name(tmp_path, monkeypatch):
+    test_db = tmp_path / "test_collision_pros.db"
+    monkeypatch.setattr(database, "DB_FILE", str(test_db))
+    initialize_database()
+
+    first_customer = Customer("John", "Wick", "408-911-9119")
+    customer_one_vehicle = Vehicle(1967, "Ford", "Mustang", "BOOGEYMANVIN", "BGGYMAN")
+    first_customer_saved = save_customer_and_vehicle(first_customer, customer_one_vehicle)
+    assert first_customer_saved is True
+
+    second_customer = Customer("John", "Deadpool", "669-911-1191")
+    customer_two_vehicle = Vehicle(1967, "Chevrolet", "Camaro", "DEADPOOLVIN", "DEDPOOL")
+    second_customer_saved = save_customer_and_vehicle(second_customer, customer_two_vehicle)
+    assert second_customer_saved is True
+
+    result = find_customers_by_first_name("John")
+
+    assert len(result) == 2
+    assert result[0][1] == "John"
+    assert result[1][1] == "John"
+    assert result[0][2] == "Wick"
+    assert result[1][2] == "Deadpool"
