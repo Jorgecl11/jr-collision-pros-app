@@ -12,6 +12,7 @@ from database_handler import(
     find_customer_by_license_plate,
     find_customer_by_vin,
     find_customers_by_first_name,
+    get_all_vehicles,
 )
 def test_save_customer_and_vehicle(tmp_path, monkeypatch):
     test_db = tmp_path / "test_collision_pros.db"
@@ -241,3 +242,26 @@ def test_find_customers_by_first_name(tmp_path, monkeypatch):
     assert result[1][1] == "John"
     assert result[0][2] == "Wick"
     assert result[1][2] == "Deadpool"
+
+def test_get_all_vehicles(tmp_path, monkeypatch):
+    test_db = tmp_path / "test_collision_pros"
+    monkeypatch.setattr(database, "DB_FILE", str(test_db))
+    initialize_database()
+
+    customer_a = Customer("John", "Wick", "408-911-9119")
+    vehicle_a = Vehicle(1967, "Ford", "Mustang", "BOOGEYMANVIN", "BGGYMAN")
+    first_customer = save_customer_and_vehicle(customer_a, vehicle_a)
+    assert first_customer is True
+
+    connection = database.get_connection()
+    cursor = connection.cursor()
+    cursor.execute(
+        "INSERT INTO customers (first_name, last_name, phone) VALUES (?, ?, ?)",
+        ("John", "Deadpool", "669-911-1191")
+    )
+    connection.commit()
+    connection.close()
+
+    rows = get_all_vehicles()
+    assert len(rows) == 1
+    assert rows[0][2] == "Wick"

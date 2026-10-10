@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from database_handler import get_all_customer_vehicles
+from database_handler import get_all_vehicles
 
 app = FastAPI()
 
@@ -10,7 +10,7 @@ def home():
 
 @app.get("/vehicles")
 def get_vehicles():
-    rows = get_all_customer_vehicles()
+    rows = get_all_vehicles()
     vehicles = []
     for row in rows:
         record = {

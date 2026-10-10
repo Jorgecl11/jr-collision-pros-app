@@ -38,6 +38,20 @@ def get_all_customer_vehicles():
     connection.close()
     return rows
 
+
+def get_all_vehicles():
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("""
+        SELECT customers.id, customers.first_name, customers.last_name, customers.phone, vehicles.year, vehicles.make, vehicles.model, vehicles.vin, vehicles.license_plate
+        FROM customers
+        INNER JOIN vehicles
+        ON customers.id = vehicles.customer_id
+        """)
+    rows = cursor.fetchall()
+    connection.close()
+    return rows
+
 def get_last_customer_vehicle():
     connection = get_connection()
     cursor = connection.cursor()

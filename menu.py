@@ -19,6 +19,7 @@ def menu_option():
         print("10. Update Customer Phone Number")
         print("11. Delete Vehicle")
         print("12. Add Vehicle to Existing Customer")
+        print("13. View all Vehicles")
         print("0. Exit")
 
         try:

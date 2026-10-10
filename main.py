@@ -15,6 +15,7 @@ from database_handler import (
     add_vehicle_to_existing_customer,
     find_customer_by_id,
     find_customers_by_full_name,
+    get_all_vehicles,
     )
 
 from menu import show_welcome, menu_option
@@ -241,6 +242,15 @@ def main():
 
                 else:
                     print("No customer found with that ID.")
+
+
+        elif selected_choice == 13:
+            rows = get_all_vehicles()
+            if rows:
+                for row in rows:
+                    display_customer_vehicle(row)
+            else:
+                print("No vehicles found.")
 
 
         elif selected_choice == 0:
