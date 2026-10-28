@@ -1,8 +1,16 @@
 from fastapi import FastAPI
 from database_handler import get_all_vehicles
+from pydantic import BaseModel
 
 app = FastAPI()
 
+class VehicleCreate(BaseModel):
+    customer_id: int
+    year: int
+    make: str
+    model: str
+    vin: str
+    license_plate: str
 
 @app.get("/")
 def home():
@@ -27,3 +35,15 @@ def get_vehicles():
         vehicles.append(record)
 
     return {"vehicles": vehicles}
+
+@app.post("/vehicles")
+def create_vehicle(vehicle: VehicleCreate):
+    return {
+        "message": "Vehicle received",
+        "customer_id": vehicle.customer_id,
+        "year": vehicle.year,
+        "make": vehicle.make,
+        "model": vehicle.model,
+        "vin": vehicle.vin,
+        "license_plate": vehicle.license_plate
+    }

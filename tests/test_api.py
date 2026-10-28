@@ -31,3 +31,4 @@ def test_get_vehicles_with_one_vehicle(tmp_path, monkeypatch):
     assert response.status_code == 200
     assert len(response.json()["vehicles"]) == 1
     assert response.json()["vehicles"][0]["make"] == "Toyota"
+    assert response.json()["vehicles"][0]["model"] == "Camry"
