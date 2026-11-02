@@ -1,5 +1,5 @@
-from fastapi import FastAPI
-from database_handler import get_all_vehicles
+from fastapi import FastAPI, HTTPException
+from database_handler import get_all_vehicles, find_customer_by_id, add_vehicle_to_existing_customer
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -36,8 +36,14 @@ def get_vehicles():
 
     return {"vehicles": vehicles}
 
-@app.post("/vehicles")
+@app.post("/vehicles", status_code=201)
 def create_vehicle(vehicle: VehicleCreate):
+    result = find_customer_by_id(vehicle.customer_id)
+    if result is None:
+        raise HTTPException(status_code=404, detail="customer not found")
+    saved = add_vehicle_to_existing_customer(vehicle.customer_id, vehicle)
+    if not saved:
+        raise HTTPException(status_code=409, detail="VIN or license plate already exists.")
     return {
         "message": "Vehicle received",
         "customer_id": vehicle.customer_id,
@@ -47,3 +53,4 @@ def create_vehicle(vehicle: VehicleCreate):
         "vin": vehicle.vin,
         "license_plate": vehicle.license_plate
     }
+    
