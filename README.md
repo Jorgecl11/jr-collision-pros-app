@@ -1,5 +1,7 @@
 # JR Collision Pros App
 
+![Tests](https://github.com/Jorgecl11/jr-collision-pros-app/actions/workflows/tests.yml/badge.svg)
+
 A Python customer and vehicle intake system for a collision repair shop, featuring a command-line interface (CLI) and an in-development REST API built with FastAPI.
 
 Customer and vehicle records are stored locally in a SQLite database.
@@ -33,6 +35,8 @@ Customer and vehicle records are stored locally in a SQLite database.
 
 - Run an HTTP API using FastAPI and Uvicorn
 - Retrieve customer and vehicle records from SQLite
+- Add a vehicle to an existing customer
+- Return correct HTTP status codes for success and error cases
 - Return database records as JSON
 - Explore and test endpoints using Swagger UI
 
@@ -42,8 +46,15 @@ Currently implemented endpoints:
 |---|---|---|
 | GET | `/` | Returns a welcome message |
 | GET | `/vehicles` | Returns customer and vehicle records from SQLite |
+| POST | `/vehicles` | Adds a vehicle to an existing customer |
 
-The API currently provides read-only access. Creating, updating, and deleting records through HTTP are not yet implemented.
+`POST /vehicles` returns:
+
+- `201 Created` when the vehicle is saved
+- `404 Not Found` when the customer ID doesn't exist
+- `409 Conflict` when the VIN or license plate already exists
+
+Updating and deleting records through HTTP are not yet implemented.
 
 ## Technologies
 
@@ -53,6 +64,7 @@ The API currently provides read-only access. Creating, updating, and deleting re
 - Uvicorn
 - pytest
 - Git and GitHub
+- GitHub Actions (continuous integration)
 
 ## Installation
 
@@ -134,6 +146,21 @@ A successful `GET /vehicles` request returns HTTP `200 OK` with JSON similar to:
 
 The actual response depends on the records stored in the local SQLite database.
 
+### Example API Request
+
+To add a vehicle to an existing customer, send a `POST /vehicles` request with JSON like:
+
+```json
+{
+  "customer_id": 1,
+  "year": 2022,
+  "make": "Toyota",
+  "model": "Camry",
+  "vin": "EXAMPLEVIN456",
+  "license_plate": "EXAMPLE2"
+}
+```
+
 **Note:** The API is currently intended for local development. Authentication and authorization have not yet been implemented. Do not expose it publicly or use it to serve real customer data over an untrusted network.
 
 ## Running Tests
@@ -153,13 +180,17 @@ The existing automated tests cover:
 - Adding another vehicle to an existing customer
 - Storing vehicle information
 - Displaying a vehicle summary
+- Listing vehicles through the API (empty and with records)
+- Creating a vehicle through the API (201)
+- Rejecting a vehicle for an unknown customer (404)
+- Rejecting a duplicate VIN without overwriting the original vehicle (409)
 
-Database tests use an isolated temporary database to avoid modifying application records.
+All tests use an isolated temporary database, provided by a shared pytest fixture, to avoid modifying application records.
 
-Automated API endpoint tests have not yet been added.
+Tests run automatically on every push and pull request through GitHub Actions.
 
 ## Development Status
 
 JR Collision Pros is an ongoing software engineering project.
 
-The command-line application and initial FastAPI integration are implemented. Planned development includes improved API data retrieval, additional REST endpoints, request validation, automated API testing, and security controls before any production deployment.
+The command-line application, initial FastAPI integration, vehicle creation endpoint, and automated API tests are implemented. Planned development includes improved API data retrieval, update and delete endpoints, request validation, and security controls before any production deployment.
