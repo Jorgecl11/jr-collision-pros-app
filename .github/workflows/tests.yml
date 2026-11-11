@@ -1,0 +1,18 @@
+name: Tests                     # made up: the name shown on GitHub
+
+on: [push, pull_request]        # required key: WHEN to run (every push and PR)
+
+jobs:                           # required key: the work to do
+  test:                         # made up: name of this job
+    runs-on: ubuntu-latest      # required key: a fresh Linux computer from GitHub
+
+    steps:                      # required key: run these in order
+      - uses: actions/checkout@v4            # download your repo onto that computer
+
+      - uses: actions/setup-python@v5        # install Python
+        with:
+          python-version: "3.14"             # same version you use locally
+
+      - run: pip install -r requirements.txt # install everything in your list
+
+      - run: python -m pytest -v             # run your tests (python -m fixes the import path, like on your machine)
