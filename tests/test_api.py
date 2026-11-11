@@ -52,3 +52,34 @@ def test_post_saved(tmp_path, monkeypatch):
     for vehicle in response.json()["vehicles"]:
         vins.append(vehicle["vin"])
     assert "CAMRY15423" in vins
+
+def test_post_customer_not_found(tmp_path, monkeypatch):
+    test_db = tmp_path / "test_collisionpros.db"
+    monkeypatch.setattr(database, "DB_FILE", str(test_db))
+    initialize_database()
+    client = TestClient(app)
+
+    response = client.post("/vehicles", json={"customer_id": 999, "year": 2022, "make": "Toyota", "model": "Camry", "vin": "CAMRY15423", "license_plate": "ABC129"})
+    assert response.status_code == 404
+    response = client.get("/vehicles")
+
+    vins = []
+    for vehicle in response.json()["vehicles"]:
+        vins.append(vehicle["vin"])
+    assert "CAMRY15423" not in vins
+
+def test_post_duplicate_vin(tmp_path, monkeypatch):
+    test_db = tmp_path / "test_collisionpros.db"
+    monkeypatch.setattr(database, "DB_FILE", str(test_db))
+    initialize_database()
+    client = TestClient(app)
+
+    customer_1 = Customer("John", "Smith", "408-555-1234")
+    vehicle_1 = Vehicle(2022, "Toyota", "Camry", "CAMRY123", "ABC1559")
+    saved = save_customer_and_vehicle(customer_1, vehicle_1)
+    assert saved is True
+
+    response = client.post("/vehicles", json={"customer_id": 1,"year": 2022, "make": "Toyota", "model": "Camry", "vin": "CAMRY123", "license_plate": "ABC129"})
+    assert response.status_code == 409
+    response = client.get("/vehicles")
+    assert len(response.json()["vehicles"]) == 1
